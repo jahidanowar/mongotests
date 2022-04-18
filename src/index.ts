@@ -59,6 +59,7 @@ class Seed {
       };
       users.push(user);
     }
+    console.log(`Array of ${this.limit} Users constructed`)
     this.data = users;
     return this;
   }
@@ -76,6 +77,7 @@ class Seed {
       };
       products.push(product);
     }
+    console.log(`Array of ${this.limit} Products constructed`)
     this.data = products;
     return this;
   }
@@ -96,7 +98,11 @@ class Seed {
 
 (async () => {
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+   await mongoose.connect("mongodb://127.0.0.1:27017/ecommerce");
+  
+  //  await new Seed(mongoose.connection, "users", 1000000).createUsers().run();
+  //  await new Seed(mongoose.connection, "products", 1000000).createUsers().run();
+
   } catch (err) {
     console.log(err);
     process.exit(1);
@@ -109,7 +115,7 @@ http
     const products: any = await connection.db
       .collection("products")
       .find({})
-      .limit(100000)
+      .limit(1000)
       .toArray();
     res.writeHead(200, { "Content-Type": "application/json" });
     res.write(JSON.stringify(products));
